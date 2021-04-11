@@ -1,0 +1,14 @@
+:root {
+    --info: #17a2b8;
+    --light: #f8f9fa;
+}
+
+body{
+    background-color:#152028;
+    color: white !important;
+
+}
+#nav_col{
+    background-color: var(--dark);
+}
+

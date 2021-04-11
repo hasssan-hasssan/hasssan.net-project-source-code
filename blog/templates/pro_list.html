@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}blog / projects{% endblock %}
+{% block content %}
+<div class="row">
+    {% for pro in projects %}
+    <div class="col-lg-6">
+        <div class="card mt-4 ho-cu">
+            <img src="/media/{{ pro.thumbnail_screen_lg }}" alt="" class="img-responsive">
+            <div class="card-footer">
+                <a href="{{ pro.link }}">
+                    <button class="btn btn-outline-info col-5 d-inline float-left">{{ pro.title }}</button>
+                </a>
+                <a href="{{ pro.get_absolute_url }}">
+                    <button class="btn btn-outline-info col-5 d-inline float-right">Comments</button>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+        <div class="jumbotron bg-transparent text-center">
+            <i class="mb-5 fa fa-exclamation-triangle fa-3x text-warning"></i>
+            <h1 dir="rtl">هنوز هیچ پروژه ای انجام نشده !</h1>
+        </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% include 'pagination.html' with page=page_obj %}
+{% endblock %}

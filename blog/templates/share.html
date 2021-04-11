@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Share a post{% endblock %}
+{% block header %}ارسال پست <a href="{{ post.get_absolute_url }}">{{ post.title }}</a> به دوستم{% endblock header %}{% block content %}
+<!-- Section Email Form -->
+<div class="row">
+    <form class="form-group-sm p-3 border-bottom" dir="rtl" method="post" >
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-12">
+                {{ form.name | as_crispy_field }}
+            </div>
+            <div class="col-lg-6">
+                {{ form.email | as_crispy_field }}
+            </div>
+            <div class="col-lg-6">
+                {{ form.to | as_crispy_field }}
+            </div>
+            <div class="col-12">
+                {{ form.comments | as_crispy_field }}
+            </div>
+            <div class="col-12 text-center">
+                <input class="btn btn-outline-info mt-2" value="ارسال پست" type="submit">
+            </div>
+        </div>
+    </form>
+</div>
+<!-- ./ Section Email Form -->
+
+
+
+
+    <!--
+    <h1>Share <a href="{{ post.get_absolute_url }}">{{ post.title }}</a> by Email.</h1>
+    {% if sent %}
+        <h2>Your email sent successfully.</h2>
+        <h3>This is your Email.</h3>
+        <p>{{ subject }}</p>
+        <p>{{ message }}</p>
+    {% else %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Send Mail">
+        </form>
+    {% endif %}-->
+{% endblock content %}

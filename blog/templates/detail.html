@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load static %}
+{% load blog_tags %}
+{% load crispy_forms_tags %}
+{% block title %}{{ post.title }}{% endblock %}
+{% block header %}{{ post.title }}{% endblock header %}
+{% block content %}
+
+    <!-- btn groups for sharing and dark mode switch -->
+    <div class="text-center">
+        <div class="btn-group btn-group col-10">
+            <a href="javascript:void()" class="btn btn-outline-danger" id="theme-toggler" onclick="toggleTheme()"></a>
+            <a href="{% url 'blog:post_share' post.id %}" class="btn btn-outline-info">اشتراک گذاری</a>
+        </div>
+    </div>
+     <!--./btn groups for sharing and dark mode switch -->
+
+
+    <div class="jumbotron bg-transparent" dir="rtl">
+        <p class="text-right pb-3 mt-4">{{ post.body | mark_safe_markdown_filter | linebreaks }}</p>
+    </div>
+
+    <div class="row">
+        {% for i in descriptions %}
+        <div class="col-12">
+            <div class="card mt-3 bg-transparent border" >
+                <div class="card-header">
+                    <p class="text-right" dir="rtl">
+                        {{ i.header_description }}
+                    </p>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <pre class="rounded-lg xmp text-white" dir="ltr">
+                                    {{ i.body_description }}
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+<!-- include page comments from other place for clear code -->
+{% include 'comments.html' with comments=comments %}
+<!-- ./include page comments from other place for clear code -->
+
+                <!-- Form Section -->
+                <form class="form-group-sm text-right border p-2 rounded mt-3" action="{{ post.get_absolute_url }}" method="post" dir="rtl">
+                    {% if not comments %}
+                        <p class="text-right" dir="rtl">هنوز هیچ دیدگاهی برای پست ({{ post.title }}) ثبت نشده شما اولین نفر هستید !</p>
+                    {% endif %}
+                  {% csrf_token %}
+                    <div class="row mb-2">
+                        <div class="col-12">
+                            {{ form.body | as_crispy_field }}
+                        </div>
+                        <div class="col-lg-6 col-12">
+                            {{ form.email | as_crispy_field }}
+                        </div>
+                        <div class="col-lg-6 col-12">
+                            {{ form.name | as_crispy_field }}
+                        </div>
+                        <div class="col-12 text-center">
+                            <button class="btn btn-outline-info">ثبت دیدگاه من</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- ./ Form Section -->
+                <!-- Similar Posts -->
+                <div class="p-2 mt-3 text-center border mb-5 rounded" dir="rtl">
+                    <h2 class="border-bottom pb-2 col-lg-6 m-auto">پست های مشابه</h2>
+                    <div class="row">
+                        {% for post in similar_posts %}
+                            <div class="col-lg-4">
+                                <div class="card mt-3 bg-transparent border shadow-sm">
+                                    <div class="card-header bg-transparent border-bottom">
+                                        <h4 class="card-title">{{ post.title | truncatewords:3 }}</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>
+                                            <a href="{{ post.get_absolute_url }}">{{ post.body | truncatewords:5 }}</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% empty %}
+                        <div class="jumbotron m-auto bg-transparent">
+                            <i class="fa fa-exclamation-triangle fa-5x text-warning mb-3 text-center"></i>
+                            <p class="display-4 text-center" dir="rtl" >
+                                پست مشابه ای وجود ندارد !
+                            </p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+
+
+{% endblock %}

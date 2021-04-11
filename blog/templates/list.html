@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load blog_tags %}
+{% block title %}blog / posts{% endblock %}
+{% block content %}
+{% for post in posts %}
+  <div class="card mt-2 border bg-transparent ">
+    <div class="card-header bg-transparent border-bottom" dir="rtl">
+      <h2 class="text-right card-title">
+        {{ post.title }}
+      </h2>
+    </div>
+    <div class="card-body text-right" dir="rtl">
+      <p>
+        <a href="{{ post.get_absolute_url }}" class="text-info text-right">
+          {{ post.body | mark_safe_markdown_filter | truncatechars:90 }}
+        </a>
+      </p>
+      <p class="date mt-3">منتشر شده توسط {{ post.author }} در تاریخ {{ post.create }} /  نظرات کاربران: ({% get_commented_post post.id %})</p>
+      <p class="date mt-3"></p>
+    </div>
+  </div>
+{% empty %}
+  <div class="container">
+    <div class="row justify-content-center mt-5">
+      <div class="jumbotron bg-transparent text-center">
+        <i class="mb-5 fa fa-exclamation-triangle fa-3x text-warning"></i>
+        <h1 dir="rtl">هنوز هیچ پستی ثبت نشده !</h1>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+{% include 'pagination.html' with page=page_obj %}
+{% endblock %}

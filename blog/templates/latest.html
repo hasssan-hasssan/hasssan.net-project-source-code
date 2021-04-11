@@ -1,0 +1,5 @@
+{% for post in latest_posts %}
+    <li class="nav-item ">
+        <a class="nav-link text-info" href="{{ post.get_absolute_url }}" dir="rtl">{{ post.title }}</a>
+    </li>
+{% endfor %}

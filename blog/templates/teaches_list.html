@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}blog | Teaches{% endblock title %}
+{% block header %}فهرست درس ها {% endblock header %}
+{% block content %}
+<div dir="rtl">
+<div class="container-fluid">
+    <div class="row">
+        {% for teach in teaches %}
+        <div class="col-lg-4 col-md-6 col-12">
+            <div class="card bg-transparent mt-3 card-teaches shadow-0 border">
+                <img src="/media/{{ teach.thumbnail }}" alt="" class="card-img-top">
+                <div class="card-header bg-transparent text-center border-0">
+                    <a href="{% url 'blog:teach_detail' teach.slug %}">{{ teach.name }}</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</div>
+{% endblock content %}

@@ -1,0 +1,37 @@
+{% load blog_tags %}
+{% load static %}
+<li class="nav-item" dir="rtl">
+    <p class="nav-link text-muted">
+        سلام به وبلاگ من خوش آمدید.
+        من تاکنون {% total_posts %} تا پست نوشته ام.
+        امیدوارم پست های من برای شما مفید باشن.
+        <a href="{% static 'files/My_Resume.pdf' %}" download class="text-info">
+            کسب اطلاعات بیشتر از من
+        </a>
+    </p>
+</li>
+<li class="nav-item">
+    <a href="{% url 'blog:teaches_list' %}" class="nav-link text-info">فهرست درس ها</a>
+</li>
+<li class="nav-item">
+    <a href="{% url 'blog:search_engine' %}" class="text-info nav-link">جست و جو کن</a>
+</li>
+<li class="nav-item">
+    <a href="{% url 'blog:post_feed' %}" class="text-info nav-link">لینک خوراک خوان</a>
+</li>
+<li class="nav-item">
+    <h5 class="nav-link disabled text-muted">آخرین پست ها</h5>
+</li>
+{% show_latest_posts 5 %}
+<li class="nav-item">
+    <h5 class="nav-link disabled text-muted">محبوب ترین ها</h5>
+</li>
+{% for post in get_most_commented_posts %}
+<li class="nav-item">
+    <a href="{{ post.get_absolute_url }}" class="nav-link">{{ post.title }}</a>
+</li>
+{% empty %}
+<li class="nav-item">
+    <span class="nav-link disabled">(⊙_⊙)？</span>
+</li>
+{% endfor %}

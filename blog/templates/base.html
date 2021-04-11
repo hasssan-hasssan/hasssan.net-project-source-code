@@ -1,0 +1,101 @@
+{% load static %}
+{% load blog_tags %}
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    <link rel="stylesheet" id="dark-theme-style">
+</head>
+
+<body>
+    <div dir="rtl" class="text text-right">
+        {% if messages %}
+              {% for message in messages %}
+               <div class="alert alert-warning alert-dismissible fade show rounded-0 fixed-top" role="alert">
+                   <h4 class="">{{ message | safe }}</h4>
+                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                       <span aria-hidden="true">&times;</span>
+                   </button>
+               </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <!-- phone navbar-->
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark navbar-phone sticky-top shadow-none">
+        <!-- Brand -->
+        <a class="navbar-brand logo" href="{% url 'blog:post_list' %}">Hasssan.net</a>
+
+       <!-- Toggler/collapsibe Button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar links -->
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav text-center">
+                {% include 'navbarli.html' %}
+            </ul>
+        </div>
+    </nav>
+    <!-- ./phone navbar -->
+
+
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- navbar column-->
+            <div class="col-md-3 text-center shadow" id="nav_col">
+
+                <nav class="navbar bg-transparent rounded navbar-lg sticky-top mt-3">
+                    <ul class="navbar-nav flex-column p-3 nav-lg" id="side_menu">
+                        <li class="nav-item">
+                            <a href="{% url 'blog:post_list' %}">
+                                <h1 class="navbar-brand m-auto logo">Hasssan.net</h1>
+                            </a>
+                        </li>
+                        {% include 'navbarli.html' %}
+                    </ul>
+                </nav>
+            </div>
+            <!-- ./navbar column-->
+
+            <!-- Content column -->
+            <div class="col-lg-9 text-right">
+                <div dir="rtl">
+                    <h2 class="mt-2 border-bottom pb-3 text-right text-orange">
+                        {% block header %}{% endblock header %}
+                    </h2>
+                </div>
+                {% block content %}{% endblock %}
+            </div>
+            <!-- ./ Content column -->
+        </div>
+    </div>
+
+
+    <script>
+    var myCollection = document.getElementsByTagName("img");
+    var i;
+    for (i = 0; i < myCollection.length; i++) {
+      myCollection[i].setAttribute('class', 'img-fluid rounded-top shadow-sm');
+    }
+    </script>
+
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+    <script src="{% static 'js/jquery-3.5.1.slim.min.js' %}"></script>
+</body>
+
+</html>

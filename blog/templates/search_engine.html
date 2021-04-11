@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}blog | search_engine{% endblock %}
+{% block header %}جست و جو کن {% endblock header %}
+{% block content %}
+    <form method="post" class="form-group border-bottom border-info" dir="rtl">
+        {% csrf_token %}
+        {{ form.data | as_crispy_field }}
+        <input type="submit" value="برو" class="btn btn-outline-info mb-2 col-3">
+    </form>
+    {% if query %}
+        {% for post in posts %}
+            <div class="card mb-2">
+                <div class="card-header bg-transparent shadow">
+                    <h3 class="text-orange border-bottom">{{ post.title }}</h3>
+                    <p>
+                        <a href="{{ post.get_absolute_url }}">
+                            {{ post.body |truncatewords:10 }}
+                        </a>
+                    </p>
+                </div>
+            </div>
+        {% empty %}
+            <div class="container">
+                <div class="row justify-content-center mt-5">
+                    <div class="jumbotron bg-transparent text-center">
+                        <i class="mb-5 fa fa-exclamation-triangle fa-5x text-warning"></i>
+                        <h1 dir="rtl">مورد مشابه یافت نشد لطفا دقیق تر سرچ کنید</h1>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
